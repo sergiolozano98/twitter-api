@@ -4,6 +4,7 @@ namespace App\UI\Http\Rest\Controller\Tweet;
 
 use App\Tweet\Application\Find\FindTweetQuery;
 use App\Tweet\Application\Find\FindTweetQueryHandler;
+use App\Tweet\Domain\LimitNotValidException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,7 @@ final class GetController extends AbstractController
      * @param string $userName
      *
      * @return JsonResponse
+     * @throws LimitNotValidException
      */
     public function __invoke(Request $request, string $userName): JsonResponse
     {
@@ -33,10 +35,6 @@ final class GetController extends AbstractController
 
         $result = $this->handler->__invoke($query);
 
-        $data = array_map(function ($object) {
-            return $object->getText();
-        }, $result);
-
-        return new JsonResponse($data);
+        return new JsonResponse($result);
     }
 }
