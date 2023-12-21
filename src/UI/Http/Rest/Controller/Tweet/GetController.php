@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Controller;
+namespace App\UI\Http\Rest\Controller\Tweet;
 
 use App\Infrastructure\TweetRepositoryInMemory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class TweetConverterController extends AbstractController
+final class GetController extends AbstractController
 {
     /**
      * @Route("/tweets/{userName}", methods={"GET"})
