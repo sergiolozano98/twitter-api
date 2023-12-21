@@ -3,7 +3,9 @@
 namespace App\Tweet\Infrastructure;
 
 use App\Tweet\Domain\Tweet;
+use App\Tweet\Domain\TweetLimit;
 use App\Tweet\Domain\TweetRepository;
+use App\Tweet\Domain\TweetUsername;
 
 final class TweetRepositoryInMemory implements TweetRepository
 {
@@ -63,14 +65,14 @@ final class TweetRepositoryInMemory implements TweetRepository
 
 
     /**
-     * @param string $username
-     * @param int    $limit
+     * @param TweetUsername $username
+     * @param TweetLimit $limit
      *
      * @return Tweet[]
      */
-    public function searchByUserName(string $username, int $limit): array
+    public function searchByUserName(TweetUsername $username, TweetLimit $limit): array
     {
-        $randomEntries = array_rand($this->tweets, $limit);
+        $randomEntries = array_rand($this->tweets, $limit->getValue());
         $tweets        = [];
         foreach ($randomEntries as $randomEntry) {
             $tweets[] = new Tweet($this->tweets[$randomEntry]);

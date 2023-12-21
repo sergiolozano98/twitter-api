@@ -14,7 +14,7 @@ class TweetFinder
         $this->repository = $repository;
     }
 
-    public function __invoke(string $username, int $limit): array
+    public function __invoke(TweetUsername $username, TweetLimit $limit): array
     {
         return $this->repository->searchByUserName($username, $limit);
     }

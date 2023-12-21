@@ -3,6 +3,9 @@
 namespace App\Tweet\Application\Find;
 
 use App\Shared\Domain\Bus\Query\QueryHandler;
+use App\Tweet\Domain\LimitNotValidException;
+use App\Tweet\Domain\TweetLimit;
+use App\Tweet\Domain\TweetUsername;
 
 class FindTweetQueryHandler implements QueryHandler
 {
@@ -14,12 +17,13 @@ class FindTweetQueryHandler implements QueryHandler
         $this->finder = $finder;
     }
 
+    /**
+     * @throws LimitNotValidException
+     */
     public function __invoke(FindTweetQuery $query): array
     {
-        /*@TODO VO*/
-        $username = $query->getUsername();
-        $limit = $query->getLimit();
-
+        $username = new TweetUsername($query->getUsername());
+        $limit = new TweetLimit($query->getLimit());
 
         return $this->finder->__invoke($username, $limit);
     }
