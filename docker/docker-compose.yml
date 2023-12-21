@@ -1,0 +1,34 @@
+version: '3'
+name: 'tweet_project'
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: ./Dockerfile
+    volumes:
+      - ../:/var/www/
+    ports:
+      - '8080:80'
+    networks:
+      - my-network
+  php:
+    build:
+      context: ./php
+      dockerfile: ./Dockerfile
+      args:
+        TIMEZONE: ${TIMEZONE}
+    ###> XDEBUG 3 ###
+    # Use your client IP here
+    # Linux: run "ip a | grep docker0"
+    environment:
+      APP_ENV: dev
+      XDEBUG_CLIENT_HOST: host.docker.internal
+      XDEBUG_CLIENT_PORT: 9000
+      PHP_IDE_CONFIG: serverName=localhost
+    volumes:
+      - ../:/var/www/
+    networks:
+      - my-network
+networks:
+  my-network:
