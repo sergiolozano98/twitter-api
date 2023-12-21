@@ -30,7 +30,7 @@ class TweetLimit
      */
     private function assertValueIsValid(int $limit): void
     {
-        if ($limit < 0 || $limit > 10) {
+        if ($limit <= 0 || $limit > 10) {
             throw new LimitNotValidException($limit);
         }
     }
