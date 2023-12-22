@@ -9,7 +9,7 @@ use App\Tweet\Domain\TweetUsername;
 
 final class TweetRepositoryInMemory implements TweetRepository
 {
-    private $tweets = [
+    private array $tweets = [
         "The sun is shining and it's a beautiful day!",
         "I just finished a great book and highly recommend it.",
         "Can't wait to travel again and explore new places!",
