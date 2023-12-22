@@ -16,7 +16,7 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class InMemoryQueryBus implements QueryBus
 {
-    private $bus;
+    private MessageBus $bus;
 
     /**
      * @throws ReflectionException
@@ -26,13 +26,13 @@ final class InMemoryQueryBus implements QueryBus
         $this->bus = new MessageBus([
             new HandleMessageMiddleware(
                 new HandlersLocator(
-                    HandlerBuilder::fromCallables($queryHandlers)
-                )
+                    HandlerBuilder::fromCallables($queryHandlers),
+                ),
             ),
         ]);
     }
 
-    public function ask(Query $query)
+    public function ask(Query $query): Response|array|null
     {
         try {
             /** @var HandledStamp $stamp */
@@ -40,7 +40,7 @@ final class InMemoryQueryBus implements QueryBus
 
             return $stamp->getResult();
         } catch (NoHandlerForMessageException $e) {
-            throw new InvalidArgumentException(sprintf('The query has not a valid handler: %s', get_class($query)));
+            throw new InvalidArgumentException(sprintf('The query has not a valid handler: %s', $query::class));
         }
     }
 }

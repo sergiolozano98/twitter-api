@@ -29,19 +29,13 @@ final class HandlerBuilder
     /**
      * @throws ReflectionException
      */
-    private static function extractFirstParam($class): ?string
+    private static function extractFirstParam(object|string $class): string|null
     {
         $reflection = new ReflectionClass($class);
         $method = $reflection->getMethod('__invoke');
 
         if ($method->getNumberOfParameters() === 1) {
-            $parameters = $method->getParameters();
-            $parameter = $parameters[0];
-
-            $class = $parameter->getClass();
-            if ($class !== null) {
-                return $class->getName();
-            }
+            return $method->getParameters()[0]->getClass()?->getName();
         }
 
         return null;

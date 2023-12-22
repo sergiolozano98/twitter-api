@@ -12,14 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class ListController extends AbstractController
 {
-    /**
-     * @var QueryBus
-     */
-    private $bus;
-
-    public function __construct(QueryBus $bus)
+    public function __construct(private readonly QueryBus $bus)
     {
-        $this->bus = $bus;
     }
 
     /**

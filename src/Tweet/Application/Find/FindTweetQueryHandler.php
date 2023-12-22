@@ -5,16 +5,13 @@ namespace App\Tweet\Application\Find;
 use App\Shared\Domain\Bus\Query\QueryHandler;
 use App\Tweet\Domain\LimitNotValidException;
 use App\Tweet\Domain\TweetLimit;
+use App\Tweet\Domain\TweetResponse;
 use App\Tweet\Domain\TweetUsername;
 
 class FindTweetQueryHandler implements QueryHandler
 {
-
-    private $finder;
-
-    public function __construct(TweetFinder $finder)
+    public function __construct(private readonly TweetFinder $finder)
     {
-        $this->finder = $finder;
     }
 
     /**
@@ -27,8 +24,6 @@ class FindTweetQueryHandler implements QueryHandler
 
         $tweets = $this->finder->__invoke($username, $limit);
 
-        return array_map(function ($tweet) {
-            return $tweet->getText();
-        }, $tweets);
+        return TweetResponse::getTextsFromTweets($tweets);
     }
 }

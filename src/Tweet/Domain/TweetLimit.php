@@ -4,17 +4,17 @@ namespace App\Tweet\Domain;
 
 class TweetLimit
 {
-    protected $limit;
+    /**
+     * @throws LimitNotValidException
+     */
+    public function __construct(protected readonly int $limit)
+    {
+        $this->assertValueIsValid($limit);
+    }
 
     /**
      * @throws LimitNotValidException
      */
-    public function __construct(int $limit)
-    {
-        $this->limit = $limit;
-        $this->assertValueIsValid($limit);
-    }
-
     public static function create(int $limit): TweetLimit
     {
         return new self($limit);

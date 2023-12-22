@@ -4,5 +4,5 @@ namespace App\Shared\Domain\Bus\Query;
 
 interface QueryBus
 {
-    public function ask(Query $query);
+    public function ask(Query $query): Response|array|null;
 }

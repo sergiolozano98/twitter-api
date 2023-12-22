@@ -6,20 +6,8 @@ use App\Shared\Domain\Bus\Query\Query;
 
 class FindTweetQuery implements Query
 {
-    /**
-     * @var string
-     */
-    private $username;
-
-    /**
-     * @var int
-     */
-    private $limit;
-
-    public function __construct(string $username, int $limit)
+    public function __construct(protected readonly string $username, protected readonly int $limit)
     {
-        $this->username = $username;
-        $this->limit = $limit;
     }
 
     public function getUsername(): string

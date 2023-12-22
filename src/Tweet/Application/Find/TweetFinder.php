@@ -9,14 +9,11 @@ use App\Tweet\Domain\TweetUsername;
 
 class TweetFinder
 {
-    /**
-     * @var TweetFinderDomain
-     */
-    private $finder;
+    private readonly TweetFinderDomain $finder;
 
-    public function __construct(TweetRepository $repository)
+    public function __construct(private readonly TweetRepository $repository)
     {
-        $this->finder = new TweetFinderDomain($repository);
+        $this->finder = new TweetFinderDomain($this->repository);
     }
 
     public function __invoke(TweetUsername $username, TweetLimit $limit): array

@@ -4,11 +4,8 @@ namespace App\Tweet\Domain;
 
 class TweetUsername
 {
-    protected $username;
-
-    public function __construct(string $username)
+    public function __construct(protected readonly string $username)
     {
-        $this->username = $username;
     }
 
     public static function create(string $username): TweetUsername
