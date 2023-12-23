@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Cache\CacheInterface;
 
 final class ListController extends AbstractController
@@ -23,7 +22,6 @@ final class ListController extends AbstractController
      *
      * @param Request $request
      * @param string $userName
-     *
      * @return JsonResponse
      * @throws InvalidArgumentException
      */
@@ -31,20 +29,11 @@ final class ListController extends AbstractController
     {
         try {
             $limit = $request->get('limit');
-            $cacheKey = 'tweets_' . $userName . '_' . ($limit ?? 'default_limit');
+            $cacheKey = sprintf('tweets_%s_%s', $userName, $limit);
 
-            $cachedItem = $this->tweetCache->getItem($cacheKey);
-
-            if (!$cachedItem->isHit()) {
-                $query = new FindTweetQuery($userName, (int)$limit);
-
-                $result = $this->bus->ask($query);
-
-                $cachedItem->set($result);
-                $this->tweetCache->save($cachedItem);
-            }
-
-            $result = $cachedItem->get();
+            $result = $this->tweetCache->get($cacheKey, function () use ($userName, $limit) {
+                return $this->bus->ask(new FindTweetQuery($userName, (int)$limit));
+            });
 
             return new JsonResponse($result);
 
