@@ -1,6 +1,6 @@
 FROM php:8.1-fpm-buster
 ARG TIMEZONE
-ARG XDEBUG=true
+ARG XDEBUG=false
 
 COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini
 

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Cache\CacheInterface;
 
 final class ListController extends AbstractController
@@ -18,7 +19,7 @@ final class ListController extends AbstractController
     }
 
     /**
-     * @Route("/tweets/{userName}", methods={"GET"})
+     * @Route ("/tweets/{userName}", methods={"GET"})
      *
      * @param Request $request
      * @param string $userName
