@@ -8,6 +8,7 @@ use App\Tweet\Application\Find\FindTweetQueryHandler;
 use App\Tweet\Application\Find\TweetFinder;
 use App\Tweet\Domain\LimitNotValidException;
 use App\Tweet\Domain\TweetRepository;
+use App\Tweet\Domain\UserNameNotFoundException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -49,26 +50,6 @@ class FindTweetTest extends TestCase
 
     /**
      * @test
-     * @throws LimitNotValidException
-     */
-    public function it_should_find_and_return_empty_array_when_not_existing_username()
-    {
-        $query = new FindTweetQuery('username', 4);
-
-        $tweets = [];
-
-        $this->repository
-            ->expects($this->once())
-            ->method('searchByUserName')
-            ->willReturn($tweets);
-
-        $response = $this->executeHandler($query);
-
-        $this->assertEquals([], $response);
-    }
-
-    /**
-     * @test
      */
     public function it_should_return_exception_when_limit_is_major_than_10()
     {
@@ -84,7 +65,23 @@ class FindTweetTest extends TestCase
     }
 
     /**
-     * @throws LimitNotValidException
+     * @test
+     */
+    public function it_should_return_exception_when_username_not_exist()
+    {
+        $this->expectException(UserNameNotFoundException::class);
+
+        $query = new FindTweetQuery('username', 8);
+
+        $this->repository
+            ->expects($this->once())
+            ->method('searchByUserName');
+
+        $this->executeHandler($query);
+    }
+
+    /**
+     * @throws LimitNotValidException|UserNameNotFoundException
      */
     private function executeHandler(FindTweetQuery $query)
     {

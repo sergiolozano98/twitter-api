@@ -5,6 +5,7 @@ namespace App\Tweet\Application\Find;
 use App\Tweet\Domain\TweetLimit;
 use App\Tweet\Domain\TweetRepository;
 use App\Tweet\Domain\TweetUsername;
+use App\Tweet\Domain\UserNameNotFoundException;
 
 class TweetFinder
 {
@@ -12,8 +13,17 @@ class TweetFinder
     {
     }
 
+    /**
+     * @throws UserNameNotFoundException
+     */
     public function __invoke(TweetUsername $username, TweetLimit $limit): array
     {
-        return $this->repository->searchByUserName($username, $limit);
+        $tweets = $this->repository->searchByUserName($username, $limit);
+
+        if (null === $tweets) {
+            throw new UserNameNotFoundException($username);
+        }
+
+        return $tweets;
     }
 }

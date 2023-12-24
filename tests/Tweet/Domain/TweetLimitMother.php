@@ -12,7 +12,7 @@ class TweetLimitMother
      */
     public static function create(?int $limit = null): TweetLimit
     {
-        return new TweetLimit($limit ?? self::random());
+        return TweetLimit::create($limit ?? self::random());
     }
 
     private static function random(): string

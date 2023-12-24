@@ -29,9 +29,20 @@ class TweetRepositoryTest extends KernelTestCase
      * @throws LimitNotValidException
      * @test
      */
-    public function it_should_find_and_return_existing_tweet()
+    public function it_should_find_and_return_null_username_not_exist()
     {
         $result = $this->repository->searchByUserName(TweetUsernameMother::create(), TweetLimitMother::create(4));
+
+        $this->assertNull($result);
+    }
+
+    /**
+     * @throws LimitNotValidException
+     * @test
+     */
+    public function it_should_find_and_return_tweet_when_username_exist(): void
+    {
+        $result = $this->repository->searchByUserName(TweetUsernameMother::create('jackDorsey'), TweetLimitMother::create(4));
 
         $this->assertCount(4, $result);
     }

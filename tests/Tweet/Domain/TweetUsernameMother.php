@@ -8,20 +8,20 @@ class TweetUsernameMother
 {
     public static function create(?string $username = null): TweetUsername
     {
-        return new TweetUsername($username ?? self::random());
+        return TweetUsername::create($username ?? self::random());
     }
 
     private static function random(): string
     {
-        return self::generateRandomString(8);
+        return self::generateRandomString();
     }
 
-    private static function generateRandomString(int $length): string
+    private static function generateRandomString(): string
     {
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $randomString = '';
 
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < 8; $i++) {
             $randomString .= $characters[rand(0, strlen($characters) - 1)];
         }
 

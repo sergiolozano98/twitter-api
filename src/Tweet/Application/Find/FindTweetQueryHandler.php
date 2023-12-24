@@ -7,6 +7,7 @@ use App\Tweet\Domain\LimitNotValidException;
 use App\Tweet\Domain\TweetLimit;
 use App\Tweet\Domain\TweetResponse;
 use App\Tweet\Domain\TweetUsername;
+use App\Tweet\Domain\UserNameNotFoundException;
 
 class FindTweetQueryHandler implements QueryHandler
 {
@@ -16,11 +17,12 @@ class FindTweetQueryHandler implements QueryHandler
 
     /**
      * @throws LimitNotValidException
+     * @throws UserNameNotFoundException
      */
     public function __invoke(FindTweetQuery $query): array
     {
-        $username = new TweetUsername($query->getUsername());
-        $limit = new TweetLimit($query->getLimit());
+        $username = TweetUsername::create($query->getUsername());
+        $limit = TweetLimit::create($query->getLimit());
 
         $tweets = $this->finder->__invoke($username, $limit);
 
