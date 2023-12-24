@@ -36,3 +36,6 @@ run-test-coverage:
 
 cache-clear:
 	docker compose -f docker/docker-compose.yml exec php php bin/console cache:clear
+
+cache-pool-clear:
+	docker compose -f docker/docker-compose.yml exec php php bin/console cache:pool:clear tweet_cache
