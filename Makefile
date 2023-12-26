@@ -3,6 +3,7 @@ make.DEFAULT_GLOBAL := help
 init:
 	make start
 	make composer-install
+	make run-test
 
 start:
 	docker compose -f docker/docker-compose.yml  up -d
