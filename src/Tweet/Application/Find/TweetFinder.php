@@ -7,9 +7,9 @@ use App\Tweet\Domain\TweetRepository;
 use App\Tweet\Domain\TweetUsername;
 use App\Tweet\Domain\UserNameNotFoundException;
 
-class TweetFinder
+readonly class TweetFinder
 {
-    public function __construct(private readonly TweetRepository $repository)
+    public function __construct(private TweetRepository $repository)
     {
     }
 

@@ -9,9 +9,9 @@ use App\Tweet\Domain\TweetResponse;
 use App\Tweet\Domain\TweetUsername;
 use App\Tweet\Domain\UserNameNotFoundException;
 
-class FindTweetQueryHandler implements QueryHandler
+readonly class FindTweetQueryHandler implements QueryHandler
 {
-    public function __construct(private readonly TweetFinder $finder)
+    public function __construct(private TweetFinder $finder)
     {
     }
 

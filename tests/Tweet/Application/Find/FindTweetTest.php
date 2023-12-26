@@ -17,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 class FindTweetTest extends TestCase
 {
     private TweetRepository|null $repository = null;
+    private FindTweetQueryHandler $handler;
 
     protected function setUp(): void
     {
@@ -27,7 +28,7 @@ class FindTweetTest extends TestCase
 
     /**
      * @test
-     * @throws LimitNotValidException
+     * @throws LimitNotValidException|UserNameNotFoundException
      */
     public function it_should_find_and_return_tweets_by_username_and_limit()
     {
@@ -50,6 +51,7 @@ class FindTweetTest extends TestCase
 
     /**
      * @test
+     * @throws UserNameNotFoundException
      */
     public function it_should_return_exception_when_limit_is_major_than_10()
     {
@@ -66,6 +68,7 @@ class FindTweetTest extends TestCase
 
     /**
      * @test
+     * @throws LimitNotValidException
      */
     public function it_should_return_exception_when_username_not_exist()
     {

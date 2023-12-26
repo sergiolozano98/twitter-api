@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-buster
+FROM php:8.2-fpm-buster
 ARG TIMEZONE
 ARG XDEBUG=false
 
