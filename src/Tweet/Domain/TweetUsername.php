@@ -2,9 +2,9 @@
 
 namespace App\Tweet\Domain;
 
-class TweetUsername
+readonly class TweetUsername
 {
-    public function __construct(protected readonly string $username)
+    public function __construct(protected string $username)
     {
     }
 

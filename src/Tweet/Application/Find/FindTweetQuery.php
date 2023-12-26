@@ -4,9 +4,9 @@ namespace App\Tweet\Application\Find;
 
 use App\Shared\Domain\Bus\Query\Query;
 
-class FindTweetQuery implements Query
+readonly class FindTweetQuery implements Query
 {
-    public function __construct(protected readonly string $username, protected readonly int $limit)
+    public function __construct(protected string $username, protected int $limit)
     {
     }
 

@@ -2,12 +2,12 @@
 
 namespace App\Tweet\Domain;
 
-class TweetLimit
+readonly class TweetLimit
 {
     /**
      * @throws LimitNotValidException
      */
-    public function __construct(protected readonly int $limit)
+    public function __construct(protected int $limit)
     {
         $this->assertValueIsValid($limit);
     }
